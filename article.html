@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width,viewport-fit=cover">
+		<title>{{&title}}</title>
+		<meta name="keywords" content="{{&keyWords}}" />
+		<meta name="description" content="{{&OPT.desc}}" />
+		<link rel='stylesheet' href='{{&OPT.gh_path}}main.css' type='text/css' />
+		<script src="https://www.w3counter.com/tracker.js?id=153208"></script>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div class="logo"><div><a href="/" rel="home"><img src="{{&OPT.logo}}" alt="{{&OPT.siteName}}"></a></div></div>
+				<nav>
+					{{#categories}}
+					<a href="/category/{{&.}}" title="{{&.}}">{{&.}}</a>
+					{{/categories}}
+				</nav>
+			</div>
+		</header>
+		<div id="wrap">
+			<div class="container wrap">
+				<div class="main">
+					<article class="hentry">
+						<div class="entry">
+							<div class="entry-head">
+								<h1 class="entry-title">{{&articleSingle.title}}</h1>
+								<div class="entry-info">
+									<time datetime="{{&articleSingle.createDate}}">{{&articleSingle.createDate10}}</time>
+									<span class="dot">•</span>
+										{{#articleSingle.category}}
+										<a href="/category/{{&.}}">{{&.}}</a>
+										{{/articleSingle.category}}
+									<span class="dot">•</span>
+									<span id="{{&articleSingle.url}}"> <em>{{&OPT.otherCodeA}}</em>	</span>
+								</div>
+							</div>
+							<div class="entry-content">
+								{{&articleSingle.contentHtml}}
+							</div>
+							<div class="entry-footer">
+								<div class="entry-tag">
+									{{#articleSingle.tags}}
+									<a href="/tags/{{&.}}" rel="tag">{{&.}}</a>
+									{{/articleSingle.tags}}
+								</div>
+
+								<div class="entry-page">
+									{{#articleNewer}}	
+									<div class="entry-page-prev" style="background-image: url(&quot;{{&img}}&quot;); display: block;">
+										<a href="{{&url}}" title="{{&title}}" rel="prev"><span>{{&title}}</span></a>
+										<div class="entry-page-info">
+											<span class="pull-left">上一篇</span>
+											<span class="pull-right">{{&createDate10}}</span>
+										</div>
+									</div>
+									{{/articleNewer}}
+
+									{{#articleOlder}}
+									<div class="entry-page-next" style="background-image: url(&quot;{{&img}}&quot;); display: block;">
+										<a href="{{&url}}" title="{{&title}}" rel="next"><span>{{&title}}</span></a>
+										<div class="entry-page-info">
+											<span class="pull-right">下一篇</span>
+											<span class="pull-left">{{&createDate10}}</span>
+										</div>
+									</div>
+									{{/articleOlder}}
+								</div>
+							</div>
+							<div class="entry-comments">
+								{{&OPT.commentCode}}
+							</div>
+						</div>
+					</article>
+				</div>
+
+				<aside class="sidebar">
+					<div class="widget">
+						<h3 class="widget-title"><span>近期文章</span></h3>
+						<ul class="post_thumb">
+							{{#newest}}
+							<li class="item">
+								<div class="item-img"><a href="{{&url}}" title="{{&title}}"><img width="480" height="264" src="{{&img}}" alt="{{&title}}" /></a></div>
+								<div class="item-content">
+									<p class="item-title"><a href="{{&url}}" title="{{&title}}">{{&title}}</a></p>
+									<p class="item-date">{{&createDate10}}</p>
+								</div>
+							</li>
+							{{/newest}}									
+						</ul>
+					</div>
+					<div class="widget">
+						<h3 class="widget-title"><span>标签</span></h3>
+						<div class="tagcloud">
+							{{#tags}}
+							<a href="/tags/{{&.}}">{{&.}}</a>
+							{{/tags}}
+						</div>
+					</div>
+
+					<div class="widget">
+						<h3 class="widget-title"><span>链接</span></h3>
+						<ul>
+							{{#links}}
+							<li><a href="{{&url}}" target="_blank">{{&title}}</a></li>
+							{{/links}}
+						</ul>
+					</div>
+				</aside>
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<div class="footer-col">
+					<div class="copyright"><p>{{&OPT.copyRight}}</p></div>
+				</div>
+			</div>
+		</footer>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width,viewport-fit=cover">
+		<title>{{&title}}</title>
+		<meta name="keywords" content="{{&keyWords}}" />
+		<meta name="description" content="{{&OPT.desc}}" />
+		<link rel='stylesheet' href='{{&OPT.gh_path}}main.css' type='text/css' />
+		<script src="https://www.w3counter.com/tracker.js?id=153208"></script>
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div class="logo"><div><a href="/" rel="home"><img src="{{&OPT.logo}}" alt="{{&OPT.siteName}}"></a></div></div>
+				<nav>
+					{{#categories}}
+					<a href="/category/{{&.}}" title="{{&.}}">{{&.}}</a>
+					{{/categories}}
+				</nav>
+			</div>
+		</header>
+		<div id="wrap">
+			<div class="container wrap">
+				<div class="main">
+					<div class="sec-panel">
+						<div class="sec-panel-body">
+							<ul class="posts">
+								{{#articleList}}
+								<li class="item">
+									<div class="item-img">
+										<a class="item-img-inner" href="{{&url}}"><img width="437" height="300" src="{{&img}}" alt="{{&title}}" /></a>
+										{{#category}}
+										<a class="item-category" href="/category/{{&.}}" >{{&.}}</a>
+										{{/category}}
+									</div>
+									<div class="item-content">
+										<h2 class="item-title"><a href="{{&url}}">{{&title}}</a></h2>
+										<div class="item-excerpt"><p>{{&contentText}} ...</p></div>
+										<div class="item-meta">
+											<span class="item-meta-li">{{&createDate10}}</span>
+											<div class="item-meta-right"><span class="item-meta-li" title="阅读数"><span id="{{&url}}"></span></span></div>
+										</div>
+									</div>
+								</li>
+								{{/articleList}}
+							</ul>
+							<ul class="pagination">
+								{{#pageNewer}}
+								<li><a href="{{&url}}" rel="prev"><span>上一页</span></a></li>
+								{{/pageNewer}}
+
+								{{#pageOlder}}
+								<li><a href="{{&url}}" rel="next"><span>下一页</span></a></li>
+								{{/pageOlder}}
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<aside class="sidebar">
+					<div class="widget">
+						<h3 class="widget-title"><span>近期文章</span></h3>
+						<ul class="post_thumb">
+							{{#newest}}
+							<li class="item">
+								<div class="item-img"><a href="{{&url}}" title="{{&title}}"><img width="480" height="264" src="{{&img}}" alt="{{&title}}" /></a></div>
+								<div class="item-content">
+									<p class="item-title"><a href="{{&url}}" title="{{&title}}">{{&title}}</a></p>
+									<p class="item-date">{{&createDate10}}</p>
+								</div>
+							</li>
+							{{/newest}}
+						</ul>
+					</div>
+					<div class="widget">
+						<h3 class="widget-title"><span>标签</span></h3>
+						<div class="tagcloud">
+							{{#tags}}
+							<a href="/tags/{{&.}}">{{&.}}</a>
+							{{/tags}}
+						</div>
+					</div>
+
+					<div class="widget">
+						<h3 class="widget-title"><span>链接</span></h3>
+						<ul>
+							{{#links}}
+							<li><a href="{{&url}}" target="_blank">{{&title}}</a></li>
+							{{/links}}
+						</ul>
+					</div>
+				</aside>
+			</div>
+		</div>
+		<footer>
+			<div class="container">
+				<div class="footer-col">
+					<div class="copyright"><p>{{&OPT.copyRight}}</p></div>
+				</div>
+			</div>
+		</footer>
+</body>
+</html>
