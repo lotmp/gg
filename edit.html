@@ -98,7 +98,7 @@
 		$('#createDate').val(articleJson.createDate.replace(" ","T"));
 		$('#tags').val(articleJson.tags);
 		$('#priority').val( (articleJson.priority=== undefined ? "0.5":articleJson.priority) );
-		$('#changefreq')val( (articleJson.changefreq === undefined ? "daily":articleJson.changefreq));
+		$('#changefreq').val( (articleJson.changefreq === undefined ? "daily":articleJson.changefreq));
 	
 		$('#WidgetCategory').val(JSON.stringify(categoryJson));
 		var category = $('#category');
