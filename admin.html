@@ -1,43 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>编辑文章</title>
+	<meta charset="utf-8">
+	<title>ublog</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/css/editormd.css" />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default " role="navigation">
 	<div class="container-fluid">
-	<div>
-		<ul id="myTab" class="nav nav-tabs">
-			<li class="active">
-				<a href="/admin/" >返回文章</a>
-			</li>
-		</ul>
-	</div>
+		<div>
+			<ul id="myTab" class="nav nav-tabs">
+				<li><a href="/" >ublog</a></li>
+				<li class="active"><a href="#list" data-toggle="tab">我的文章</a></li>
+				<li><a href="#new" data-toggle="tab">新建</a></li>
+				<li><a href="#config" data-toggle="tab">设置</a></li>
+				<li><a href="#pub" data-toggle="tab">发布</a></li>
+			</ul>
+		</div>
 	</div>
 </nav>
-<div id="myTabContent" class="tab-content" style="padding-top: 60px;">
+<div class="tab-content" style="padding-top: 60px;">
+	<div class="tab-pane fade" id="list">
+		<div class="container" >
+			<table class="table table-striped" id="articleList">
+				<tr><td>ID</td><td>标题</td><td>创建日期</td></tr>
+			</table>
+			<input type="hidden" name="page" id="page" value='1'>
+		</div> 
+	</div>
+	<div class="tab-pane fade in active" id="new">
 		<div class="container">
-			<h3>编辑文章</h3>
-			<form id="editForm" class="form-inline"  action="/" >
+			<h3 id="labelNew">新增<span style="color: red;">*</span></h3>
+			<form id="addNewForm" class="form-inline" >
 				<div class="form-group" style="width: 98%">
-					<input type="hidden" class="form-control" name="id" id="id" readonly required="true">
-					<input type="text" class="form-control" name="title" id="title" placeholder="标题" style="width: 800px;" required="true">
+					<input type="hidden" class="form-control" name="id" id="id" >
+					<input type="text" class="form-control" name="title" id="title" placeholder="标题" style="width: 100%;" required="true">
 				</div>
 				<div class="form-group">
 					<label>特色图片</label>
-					<input type="url" class="form-control" style="width: 400px;"  name="img" id="img" placeholder="" >
+					<input type="url" class="form-control" style="width: 400px;" name="img" id="img" placeholder="" >
 				</div>
 				<div class="form-group">
-					<label>创建日期</label>
-					<input type="datetime-local" class="form-control" id="createDate" name="createDate" placeholder="" style="vertical-align:left !important;" required="true">
+					<label>创建日期<span style="color: red;">*</span></label>
+					<input type="datetime-local" class="form-control" id="createDate" name="createDate" placeholder="" required="true">
 				</div>
 				<div class="form-group">
-					<label>分类</label>
+					<label>分类<span style="color: red;">*</span></label>
 					<select class="selectpicker" multiple name="category[]" id="category">
 					</select>
 				</div>
@@ -51,76 +62,148 @@
 				</div>
 				<div class="form-group">
 					<label>更新频率</label>
-					    <select class="form-control" id="changefreq" name="changefreq">
-							<option value="daily" >daily</option>
-							<option value="hourly" >hourly</option>
-							<option value="weekly" >weekly</option>
-							<option value="monthly" >monthly</option>
-							<option value="yearly" >yearly</option>
-							<option value="never" >never</option>
-							<option value="always" >always</option>
-					    </select>
+						<select class="form-control" id="changefreq" name="changefreq">
+						<option value="daily" selected = "selected" >daily</option>
+						<option value="hourly" >hourly</option>
+						<option value="weekly" >weekly</option>
+						<option value="monthly" >monthly</option>
+						<option value="yearly" >yearly</option>
+						<option value="never" >never</option>
+						<option value="always" >always</option>
+						</select>
 				</div>
-					<a tabindex="0"  role="button"  type="submit" id="btn_saveEdit" class="btn btn-default" onclick="saveEdit()">保存</a>
-					<a  type="submit" role="button" id="btn_delete" class="btn btn-warning" onclick="deleteArticle()">删除</a>
+				<a tabindex="0" role="button" type="submit" id="btn_saveAddNew" class="btn btn-default" onclick="saveAddNew()">保存</a>
 				<div id="content"><textarea style="display:none;"></textarea></div>
 			</form>
 		</div>
+	</div>
+	
+	<div class="tab-pane fade" id="config">
+		<div class="container" >
+			<form id="configForm" role="form" >
+				<div class="form-group">
+					<label for="name">分类, 例:<code>["类别A","类别B","类别C","类别D"]</code></label>
+					<textarea class="form-control" id="WidgetCategory" name="WidgetCategory" rows="3" placeholder='["分类A","分类B"]'></textarea>
+				</div>
+				<div class="form-group">
+					<label for="name">其他链接, 例:<code>[{"title":"谷歌","url":"https://www.google.com/"}]</code></label>
+					<textarea class="form-control" id="WidgetLink" name="WidgetLink" rows="5"  placeholder='[{"title":"谷歌","url":"https://www.google.com/"}]'></textarea>
+				</div>
+				<a tabindex="0" role="button" type="submit" id="btn_saveConfig" class="btn btn-default" onclick="saveConfig()">保存</a>
+			</form>
+			<form id="importForm" role="form" >
+				<div class="form-group">
+					<label for="name">导出/导入</label>
+					<textarea class="form-control" id="importJson" name="importJson" rows="3" placeholder='复制完整的导出json'></textarea>
+				</div>
 
+				<a tabindex="0" role="button" type="submit" id="btn_import" class="btn btn-default" onclick="importBlog()">导入</a>
+				<a tabindex="0" role="button" type="submit" id="btn_export" class="btn btn-default" href="/admin/export/" >导出</a>
+			</form>
+		</div>
+	</div>
+
+	<div class="tab-pane fade" id="pub">
+		<div class="container" >
+			<div class="jumbotron" >
+				<p class="lead">
+				由于前端使用缓存,以下操作需要发布:新建文章、发布文章、修改后台配置、修改workers配置</br>
+				前端生效需要ctrl+F5 强制刷新
+				</p>
+				<a href="#" class="btn btn-default" onclick="publish()">发布</a>
+			</div>
+		</div>
+	</div>	
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.js"></script>   
+<script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.js"></script>
 <script type="text/javascript">
-	$(function() {
-		$('#myTab li:eq(0) a').tab('show');
-		var articleJson = {{&articleJson}};
-		var categoryJson = {{&categoryJson}};
-		var mdEditor = editormd("content", { //width  : "90%",
-			height:640, path:"https://cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
-			appendMarkdown:articleJson.contentMD, //编辑器赋值
-			saveHTMLToTextarea:true, mode:"markdown", tex:true, tocm:true, codeFold:true
+	$(function(){
+		var categories = {{&categories}};
+		var linkJson = {{&linkJson}};
+		var mdEditor = editormd("content", {
+			path:"https://cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+			height:640, appendMarkdown:"# MarkDown", saveHTMLToTextarea:true, mode:"markdown", tex:true, tocm:true,  codeFold:true
 		});
-		//表单赋值
-		$('#id').val(articleJson.id);
-		$('#title').val(articleJson.title);
-		$('#img').val(articleJson.img);
-		$('#createDate').val(articleJson.createDate.replace(" ","T"));
-		$('#tags').val(articleJson.tags);
-		$('#priority').val( (articleJson.priority===undefined?"0.5":articleJson.priority) );
-		$('#changefreq').val( (articleJson.changefreq===undefined?"daily":articleJson.changefreq));
 
-		$('#WidgetCategory').val(JSON.stringify(categoryJson));
-		var category=$('#category'); category.empty();
-		for (var i=0; i<categoryJson.length; i++) category.append('<option id=' + categoryJson[i] + ' value=' + categoryJson[i] + '>' + categoryJson[i] + '</option>');
-		category.val(articleJson.category);
-	});
-    function saveEdit(){
+		$('#createDate').val(new Date());
+		$('#WidgetCategory').val(JSON.stringify(categories));
+		$('#WidgetLink').val(JSON.stringify(linkJson));
+		var category = $('#category'); category.empty();
+		for(var i=0; i<categories.length; i++) category.append('<option id=' + categories[i] + ' value=' + categories[i] + '>' + categories[i] + '</option>');
+
+		var page=$("#page").val();
         $.ajax({
-            type: "POST",
-            dataType: "json",
-			contentType: "application/json; charset=utf-8",
-            url: "/admin/saveEdit/" ,//url
-            data: JSON.stringify($("#editForm").serializeArray()), 
-            success: function (result) {
-                alert(result.msg);
+            url:"/admin/getList/" + page + "/", type:'GET', dataType:"json",
+            success:function(data){
+                tableContent="";
+                $.each(data, function(i){
+                    var Info=data[i];
+                    var num=i+1;
+                    tableContent += '<tr><td>'+Info.id+'</td><td><a href="/admin/edit/'+Info.id+'/">'+Info.title+'</a></td><td>'+Info.createDate.replace("T","")+'</td></tr>';
+                })
+                $("#articleList").append(tableContent);
+                $("#page").val(++page);
+            }
+        });
+	});
+
+    function saveAddNew(){
+        if(!$('#title').val() || !$('#createDate').val() || !$('#category').val()) return alert("信息不全");
+        var postURL = "/admin/saveEdit/";
+        if ($('#id').val()=="" || $('#id').val()==null) postURL="/admin/saveAddNew/";
+        $.ajax({
+            type:"POST", dataType:"json", url:postURL,
+			contentType:"application/json; charset=utf-8",
+			data:JSON.stringify($("#addNewForm").serializeArray()), 
+            success: function (result){
+                if("msg" in result){
+                  if ("id" in result){
+                    $('#id').val(result.id);
+                    $('#labelNew').text("编辑:"+result.id);
+                  }
+                  alert(result.msg);
+                }else alert("失败");
             }
         });
     }
-
-    function deleteArticle(){
-        if (confirm("确定删除吗?删除后重新发布才能生效")==false) return false;
+    //保存设置
+    function saveConfig(){
+        if(!isJSON($('#WidgetCategory').val()))
+        {
+            alert("分类格式错误"); 
+            return false;
+        }
         $.ajax({
-            type: "POST",
-            dataType: "json",
-			contentType: "application/json; charset=utf-8",
-            url: "/admin/delete/"+$('#id').val() ,//url
-            data: [{"id":$('#id').val()}],
-            success:function (result) {
-                alert(result.msg);
-            }
+            type:"POST", dataType:"json",
+			contentType:"application/json; charset=utf-8",
+            url:"/admin/saveConfig/" ,
+			data:JSON.stringify($("#configForm").serializeArray()), 
+            success:function(result) { alert(result.msg); }
         });
+    }
+    //导入json
+    function importBlog(){
+        if(!isJSON($('#importJson').val())){
+            alert("导入格式错误"); 
+            return false;
+        }
+        $.post("/admin/import/", JSON.stringify($("#importForm").serializeArray())).done(res=>alert(res.msg));
+    }
+    function publish(){
+        if(confirm("确定吗?发布将清理所有静态缓存,重新生成")) $.post("/admin/publish/").done(res=>alert(res.msg));
+    }
+    function isJSON(str){
+        if(typeof str == 'string'){
+            try {
+                var obj=JSON.parse(str);
+                if(typeof obj == 'object' && obj) return true;
+                else return false;
+            }catch(e){ return false; }
+        }
+        return false;
     }
 </script>
-  
+
 </body>
 </html>
